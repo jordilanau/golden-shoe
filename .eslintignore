@@ -17,3 +17,4 @@ README.md
 jest.setup.ts
 next-env.d.ts
 tailwind.config.js
+postcss.config.js
