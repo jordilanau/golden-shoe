@@ -4,15 +4,8 @@
 .node_modules
 .public
 .eslintcache
-.eslintrc.json
 .gitignore
-.prettierrc
-jest.config.js
-next.config.js
 package-lock.json
-package.json
-tsconfig.jest.json
-tsconfig.json
 README.md
 jest.setup.ts
 next-env.d.ts
