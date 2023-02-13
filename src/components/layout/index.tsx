@@ -7,7 +7,7 @@ type Props = {
 
 const Layout: FC<Props> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col" data-testid="layout-container">
+    <div className="min-h-screen flex flex-col bg-gray-200" data-testid="layout-container">
       <Header />
       {children}
     </div>

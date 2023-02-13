@@ -3,7 +3,7 @@ import Navbar from '../nav';
 
 function Header() {
   return (
-    <header>
+    <header data-testid="header">
       <Navbar storeLinks={storeLinks} />
     </header>
   );

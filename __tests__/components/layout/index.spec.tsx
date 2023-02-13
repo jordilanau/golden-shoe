@@ -6,7 +6,8 @@ describe('Layout', () => {
     render(<Layout />);
 
     const layout = screen.getByTestId('layout-container');
-    expect(within(layout).getByRole('navigation')).toBeInTheDocument();
+    expect(within(layout).getByTestId('small-screen-nav')).toBeInTheDocument();
+    expect(within(layout).getByTestId('large-screen-nav')).toBeInTheDocument();
   });
 
   it('renders its children', () => {

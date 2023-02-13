@@ -5,6 +5,6 @@ describe('Header', () => {
   it('renders the navbar', () => {
     render(<Header />);
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    expect(screen.getByTestId('header')).toBeInTheDocument();
   });
 });

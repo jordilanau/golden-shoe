@@ -7,17 +7,31 @@ describe('Navbar', () => {
     {
       text: 'men',
       href: '/men',
+      categories: [],
     },
     {
       text: 'women',
       href: '/men',
+      categories: [],
     },
   ];
 
-  it('renders links passed as a prop', () => {
+  it('the renders navigation for large and small screens', () => {
     render(<Navbar storeLinks={storeLinks} />);
+    const navigation = screen.getAllByRole('navigation');
+    expect(navigation).toHaveLength(2);
+  });
 
-    const navigation = screen.getByRole('navigation');
+  it('the large screen nav renders links passed as a prop', () => {
+    render(<Navbar storeLinks={storeLinks} />);
+    const navigation = screen.getByTestId('large-screen-nav');
+    const listElements = within(navigation).getAllByRole('listitem');
+    expect(listElements).toHaveLength(storeLinks.length);
+  });
+
+  it('the small screen nav renders links passed as a prop', () => {
+    render(<Navbar storeLinks={storeLinks} />);
+    const navigation = screen.getByTestId('small-screen-nav');
     const listElements = within(navigation).getAllByRole('listitem');
     expect(listElements).toHaveLength(storeLinks.length);
   });
