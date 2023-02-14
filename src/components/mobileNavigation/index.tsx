@@ -1,23 +1,17 @@
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useContext } from 'react';
 import { CgClose } from 'react-icons/cg';
-import { StoreLinkType } from '../../utils/storeLinks';
+import { AppContext } from '../../context/appContext';
+import { StoreProps } from '../../utils/storeLinks';
 
-type Props = {
-  storeLinks: StoreLinkType[];
-  isVisible: boolean;
-  toggleNav: () => void;
-};
-
-function MobileNavigation({ storeLinks, isVisible, toggleNav }: Props) {
-  const navRef = useRef<HTMLElement>(null);
+function MobileNavigation({ storeLinks }: StoreProps) {
+  const { toggleNav, showMobileNav } = useContext(AppContext);
 
   return (
     <nav
-      ref={navRef}
       className={
         'md:hidden absolute bg-gray-100 left-0 top-0 bottom-0 flex flex-col items-start transition-width overflow-hidden ' +
-        (isVisible ? 'w-72' : 'w-0')
+        (showMobileNav ? 'w-72' : 'w-0')
       }
       data-testid="small-screen-nav"
     >

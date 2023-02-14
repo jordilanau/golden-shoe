@@ -4,6 +4,10 @@ export type StoreLinkType = {
   categories: { text: string; href: string }[];
 };
 
+export type StoreProps = {
+  storeLinks: StoreLinkType[];
+};
+
 export const storeLinks: StoreLinkType[] = [
   {
     text: 'men',

@@ -1,23 +1,21 @@
-import { useState } from 'react';
-import { StoreLinkType } from '../../utils/storeLinks';
+import { useContext } from 'react';
+import { AppContext } from '../../context/appContext';
+import { StoreProps } from '../../utils/storeLinks';
 import MobileNavigation from '../mobileNavigation';
 import Navigation from '../navigation';
 
-type Props = {
-  storeLinks: StoreLinkType[];
-};
-
-function Navbar({ storeLinks }: Props) {
-  const [showMobileNav, setShowMobileNav] = useState(false);
-
-  function toggleNav() {
-    setShowMobileNav((oldValue) => !oldValue);
-  }
+function Navbar({ storeLinks }: StoreProps) {
+  const { toggleNav, showMobileNav } = useContext(AppContext);
 
   return (
-    <div className="navbar bg-base-100 min-h-min">
+    <div className="navbar min-h-min">
       <div className="flex-none">
-        <button className="md:hidden btn btn-square btn-ghost" onClick={toggleNav}>
+        <button
+          className="md:hidden btn btn-square btn-ghost"
+          onClick={toggleNav}
+          data-testid="toggle-nav-btn"
+          type="button"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -29,7 +27,7 @@ function Navbar({ storeLinks }: Props) {
         </button>
       </div>
       <Navigation storeLinks={storeLinks} />
-      <MobileNavigation storeLinks={storeLinks} isVisible={showMobileNav} toggleNav={toggleNav} />
+      <MobileNavigation storeLinks={storeLinks} />
     </div>
   );
 }

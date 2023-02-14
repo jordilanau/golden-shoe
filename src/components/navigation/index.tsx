@@ -1,11 +1,7 @@
 import Link from 'next/link';
-import { StoreLinkType } from '../../utils/storeLinks';
+import { StoreProps } from '../../utils/storeLinks';
 
-type Props = {
-  storeLinks: StoreLinkType[];
-};
-
-function Navigation({ storeLinks }: Props) {
+function Navigation({ storeLinks }: StoreProps) {
   return (
     <nav className="hidden md:block mx-auto" data-testid="large-screen-nav">
       <ul className="menu menu-horizontal space-x-20 capitalize">
