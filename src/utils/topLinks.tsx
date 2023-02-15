@@ -1,4 +1,4 @@
-import { BiUserCircle } from 'react-icons/bi';
+import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 
 export type TopLinksType = {
   icon: React.ReactNode;
@@ -7,7 +7,11 @@ export type TopLinksType = {
 
 export const topLinks: TopLinksType[] = [
   {
-    icon: <BiUserCircle />,
+    icon: <AiOutlineShoppingCart />,
+    href: '/checkout',
+  },
+  {
+    icon: <AiOutlineUser />,
     href: '/signup',
   },
 ];
