@@ -1,10 +1,9 @@
 import { useContext } from 'react';
 import { AppContext } from '../../context/appContext';
-import { StoreProps } from '../../utils/storeLinks';
 import MobileNavigation from '../mobileNavigation';
 import Navigation from '../navigation';
 
-function Navbar({ storeLinks }: StoreProps) {
+function Navbar() {
   const { toggleNav, showMobileNav } = useContext(AppContext);
 
   return (
@@ -26,8 +25,8 @@ function Navbar({ storeLinks }: StoreProps) {
           </svg>
         </button>
       </div>
-      <Navigation storeLinks={storeLinks} />
-      <MobileNavigation storeLinks={storeLinks} />
+      <Navigation />
+      <MobileNavigation />
     </div>
   );
 }

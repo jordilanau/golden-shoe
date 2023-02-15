@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { StoreProps } from '../../utils/storeLinks';
+import { storeLinks } from '../../utils/storeLinks';
 
-function Navigation({ storeLinks }: StoreProps) {
+function Navigation() {
   return (
     <nav className="hidden md:block mx-auto" data-testid="large-screen-nav">
       <ul className="menu menu-horizontal space-x-20 capitalize">

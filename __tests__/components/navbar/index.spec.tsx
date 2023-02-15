@@ -1,10 +1,14 @@
 import { render, screen, within } from '@testing-library/react';
 import Navbar from '../../../src/components/nav';
 import { AppContext, AppState } from '../../../src/context/appContext';
-import { StoreLinkType } from '../../../src/utils/storeLinks';
 
-describe('Navbar', () => {
-  const storeLinks: StoreLinkType[] = [
+jest.mock('../../../src/utils/storeLinks', () => ({
+  storeLinks: [
+    {
+      text: 'deals',
+      href: '/deals',
+      categories: [],
+    },
     {
       text: 'men',
       href: '/men',
@@ -15,26 +19,32 @@ describe('Navbar', () => {
       href: '/men',
       categories: [],
     },
-  ];
+  ],
+}));
+
+describe('Navbar', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('the renders navigation for large and small screens', () => {
-    render(<Navbar storeLinks={storeLinks} />);
+    render(<Navbar />);
     const navigation = screen.getAllByRole('navigation');
     expect(navigation).toHaveLength(2);
   });
 
   it('the large screen nav renders links passed as a prop', () => {
-    render(<Navbar storeLinks={storeLinks} />);
+    render(<Navbar />);
     const navigation = screen.getByTestId('large-screen-nav');
     const listElements = within(navigation).getAllByRole('listitem');
-    expect(listElements).toHaveLength(storeLinks.length);
+    expect(listElements).toHaveLength(3);
   });
 
   it('the small screen nav renders links passed as a prop', () => {
-    render(<Navbar storeLinks={storeLinks} />);
+    render(<Navbar />);
     const navigation = screen.getByTestId('small-screen-nav');
     const listElements = within(navigation).getAllByRole('listitem');
-    expect(listElements).toHaveLength(storeLinks.length);
+    expect(listElements).toHaveLength(3);
   });
 
   it('adds the class w-0 when showMobileNav is false', () => {
@@ -44,7 +54,7 @@ describe('Navbar', () => {
     };
     render(
       <AppContext.Provider value={initialState}>
-        <Navbar storeLinks={storeLinks} />
+        <Navbar />
       </AppContext.Provider>
     );
 
@@ -60,7 +70,7 @@ describe('Navbar', () => {
     };
     render(
       <AppContext.Provider value={initialState}>
-        <Navbar storeLinks={storeLinks} />
+        <Navbar />
       </AppContext.Provider>
     );
 

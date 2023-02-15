@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { storeLinks } from '../../utils/storeLinks';
 import { topLinks } from '../../utils/topLinks';
 import Navbar from '../nav';
 
@@ -25,7 +24,7 @@ function Header() {
             })}
           </ul>
         </div>
-        <Navbar storeLinks={storeLinks} />
+        <Navbar />
       </div>
     </header>
   );

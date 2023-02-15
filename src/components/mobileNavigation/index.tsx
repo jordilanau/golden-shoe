@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { useContext } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { AppContext } from '../../context/appContext';
-import { StoreProps } from '../../utils/storeLinks';
+import { storeLinks } from '../../utils/storeLinks';
 
-function MobileNavigation({ storeLinks }: StoreProps) {
+function MobileNavigation() {
   const { toggleNav, showMobileNav } = useContext(AppContext);
 
   return (
