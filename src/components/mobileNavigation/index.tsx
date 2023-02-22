@@ -20,11 +20,17 @@ function MobileNavigation() {
         <CgClose className="text-red-600" />
       </button>
 
+      <input
+        type="text"
+        placeholder="Search"
+        className="input rounded-none w-full focus:bg-slate-200 focus:outline-none bg-slate-200"
+      />
+
       <ul className="w-full px-4">
         {storeLinks.map((link) => {
           return (
             <li className="text-gray-900 w-full border-b-2 border-gray-300 py-2 first:pt-0" key={link.text}>
-              <Link className="py-3 min-h-full hover:bg-base-100 capitalize text-lg font-semibold" href={link.href}>
+              <Link className="py-3 min-h-full capitalize text-lg font-semibold" href={link.href}>
                 {link.text}
               </Link>
               <ul className="pt-2 space-y-2">
