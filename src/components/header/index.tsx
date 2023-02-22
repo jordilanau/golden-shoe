@@ -5,7 +5,7 @@ import Navbar from '../nav';
 function Header() {
   return (
     <header data-testid="header" className="bg-base-100">
-      <div className="md:container md:flex md:flex-col md:mx-auto">
+      <div className="md:flex md:flex-col md:mx-auto">
         <div className="flex space-x-3 items-center justify-end md:pt-4 md:pr-4">
           <input
             type="text"
