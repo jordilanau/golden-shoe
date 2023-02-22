@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { AppContext } from '../../context/appContext';
 import { storeLinks } from '../../utils/storeLinks';
+import { topLinks } from '../../utils/topLinks';
 
 function MobileNavigation() {
   const { toggleNav, showMobileNav } = useContext(AppContext);
@@ -10,7 +11,7 @@ function MobileNavigation() {
   return (
     <nav
       className={
-        'md:hidden absolute bg-gray-100 left-0 top-0 bottom-0 flex flex-col items-start transition-width overflow-hidden ' +
+        'md:hidden absolute bg-gray-100 left-0 top-0 bottom-0 flex flex-col space-y-4 items-start transition-width overflow-hidden ' +
         (showMobileNav ? 'w-72' : 'w-0')
       }
       data-testid="small-screen-nav"
@@ -19,7 +20,7 @@ function MobileNavigation() {
         <CgClose className="text-red-600" />
       </button>
 
-      <ul className="">
+      <ul>
         {storeLinks.map((link) => {
           return (
             <li className="text-gray-900 pb-0" key={link.text}>
@@ -37,6 +38,17 @@ function MobileNavigation() {
                   );
                 })}
               </ul>
+            </li>
+          );
+        })}
+      </ul>
+      <ul className="flex flex-col space-y-4 px-4">
+        {topLinks.map((link) => {
+          return (
+            <li key={link.href}>
+              <Link href={link.href} className="btn btn-wide btn-sm btn-primary">
+                {link.text}
+              </Link>
             </li>
           );
         })}

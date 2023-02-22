@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
+import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import Navbar from '../../../src/components/nav';
 import { AppContext, AppState } from '../../../src/context/appContext';
 
@@ -22,6 +23,21 @@ jest.mock('../../../src/utils/storeLinks', () => ({
   ],
 }));
 
+jest.mock('../../../src/utils/topLinks.tsx', () => ({
+  topLinks: [
+    {
+      icon: <AiOutlineShoppingCart />,
+      text: 'basket',
+      href: '/checkout',
+    },
+    {
+      icon: <AiOutlineUser />,
+      text: 'sign up',
+      href: '/signup',
+    },
+  ],
+}));
+
 describe('Navbar', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -33,18 +49,18 @@ describe('Navbar', () => {
     expect(navigation).toHaveLength(2);
   });
 
-  it('the large screen nav renders links passed as a prop', () => {
+  it('the large screen nav renders navigation links', () => {
     render(<Navbar />);
     const navigation = screen.getByTestId('large-screen-nav');
     const listElements = within(navigation).getAllByRole('listitem');
     expect(listElements).toHaveLength(3);
   });
 
-  it('the small screen nav renders links passed as a prop', () => {
+  it('the small screen nav renders navigation links', () => {
     render(<Navbar />);
     const navigation = screen.getByTestId('small-screen-nav');
     const listElements = within(navigation).getAllByRole('listitem');
-    expect(listElements).toHaveLength(3);
+    expect(listElements).toHaveLength(5);
   });
 
   it('adds the class w-0 when showMobileNav is false', () => {
