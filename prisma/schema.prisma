@@ -11,18 +11,29 @@ datasource db {
 }
 
 model Shoe {
-  id               Int      @id @default(autoincrement())
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  sku              String   @unique
-  model            String   @db.VarChar(50)
-  description      String   @db.VarChar(256)
-  image            String   @db.VarChar(256)
-  gender           Gender
-  size             String
-  stock            Int
-  variants         Shoe[]   @relation("variants")
-  variantsRelation Shoe[]   @relation("variants")
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  sku         String        @unique
+  model       String        @db.VarChar(50)
+  description String        @db.VarChar(256)
+  image       String        @db.VarChar(256)
+  category    String        @db.VarChar(256)
+  gender      Gender
+  size        String
+  stock       Int
+  variants    ShoeVariant[]
+}
+
+model ShoeVariant {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sku       String   @unique
+  size      String
+  stock     Int
+  Shoe      Shoe     @relation(fields: [shoeId], references: [id])
+  shoeId    Int
 }
 
 enum Gender {
