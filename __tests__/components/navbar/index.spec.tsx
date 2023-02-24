@@ -56,7 +56,7 @@ describe('Navbar', () => {
     expect(listElements).toHaveLength(3);
   });
 
-  it('the small screen nav renders navigation links', () => {
+  it('the small screen nav renders navigation links and user links', () => {
     render(<Navbar />);
     const navigation = screen.getByTestId('small-screen-nav');
     const listElements = within(navigation).getAllByRole('listitem');
