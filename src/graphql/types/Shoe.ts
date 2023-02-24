@@ -20,7 +20,7 @@ const Gender = builder.enumType('Gender', {
   values: ['Men', 'Women'] as const,
 });
 
-builder.queryField('shoes', (t) =>
+builder.queryField('getAllShoes', (t) =>
   t.prismaField({
     type: ['Shoe'],
     resolve: (query, _parent, _args, _ctx, _info) => prisma.shoe.findMany({ ...query }),
