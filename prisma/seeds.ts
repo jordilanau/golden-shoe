@@ -86,8 +86,6 @@ async function main() {
         gender,
         category,
         image,
-        size: '8',
-        stock: parseInt(faker.random.numeric(1)),
         variants: {
           create: [
             {

@@ -24,8 +24,6 @@ model Shoe {
   image       String        @db.VarChar(256)
   category    String        @db.VarChar(256)
   gender      Gender
-  size        String
-  stock       Int
   variants    ShoeVariant[]
 }
 
