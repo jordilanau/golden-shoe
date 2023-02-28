@@ -75,3 +75,29 @@ builder.queryField('getModelBySku', (t) =>
       }),
   })
 );
+
+builder.mutationField('createModel', (t) =>
+  t.prismaField({
+    type: 'Shoe',
+    nullable: true,
+    args: {
+      model: t.arg.string({ required: true }),
+      description: t.arg.string({ required: true }),
+      image: t.arg.string({ required: true }),
+      category: t.arg.string({ required: true }),
+      gender: t.arg.string({ required: true }),
+    },
+    resolve: async (mutation, _parent, args, _ctx, _info) =>
+      await prisma.shoe.create({
+        data: {
+          sku: Math.random().toString(36).substring(2, 12),
+          model: args.model,
+          description: args.description,
+          image: args.image,
+          category: args.category,
+          gender: args.gender as Gender,
+        },
+        ...mutation,
+      }),
+  })
+);

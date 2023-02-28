@@ -25,3 +25,11 @@ builder.queryType({
     }),
   }),
 });
+
+builder.mutationType({
+  fields: (t) => ({
+    ok: t.boolean({
+      resolve: () => true,
+    }),
+  }),
+});

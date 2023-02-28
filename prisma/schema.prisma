@@ -34,8 +34,8 @@ model ShoeVariant {
   sku       String   @unique
   size      String
   stock     Int
-  Shoe      Shoe     @relation(fields: [shoeId], references: [id])
-  shoeId    Int
+  Shoe      Shoe     @relation(fields: [shoeSku], references: [sku])
+  shoeSku   String
 }
 
 enum Gender {
