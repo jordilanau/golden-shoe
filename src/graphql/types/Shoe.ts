@@ -1,6 +1,9 @@
 import { Gender } from '@prisma/client';
 import { prisma } from '../../global/db';
 import { builder } from '../builder';
+import { CategoryValues } from './Category';
+import { GenderEnum } from './GenderEnum';
+import { ShoeSizeStock } from './ShoeVariant';
 
 builder.prismaObject('Shoe', {
   fields: (t) => ({
@@ -15,9 +18,9 @@ builder.prismaObject('Shoe', {
     model: t.exposeString('model'),
     description: t.exposeString('description'),
     image: t.exposeString('image'),
-    category: t.exposeString('category'),
+    category: t.relation('category', { type: CategoryValues }),
     gender: t.expose('gender', { type: GenderEnum }),
-    variants: t.relation('variants'),
+    variants: t.relation('variants', { type: ShoeSizeStock }),
   }),
 });
 
@@ -34,13 +37,9 @@ export const ShoeModel = builder.prismaObject('Shoe', {
     model: t.exposeString('model'),
     description: t.exposeString('description'),
     image: t.exposeString('image'),
-    category: t.exposeString('category'),
+    category: t.relation('category', { type: CategoryValues }),
     gender: t.expose('gender', { type: GenderEnum }),
   }),
-});
-
-const GenderEnum = builder.enumType('Gender', {
-  values: [Gender.Men, Gender.Women] as const,
 });
 
 builder.queryField('getAllModels', (t) =>
@@ -98,7 +97,11 @@ builder.mutationField('createModel', (t) =>
           model: args.model,
           description: args.description,
           image: args.image,
-          category: args.category,
+          category: {
+            connect: {
+              category: args.category,
+            },
+          },
           gender: args.gender as Gender,
         },
         ...mutation,

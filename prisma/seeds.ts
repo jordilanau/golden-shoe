@@ -18,18 +18,23 @@ import {
 async function main() {
   await prisma.shoe.deleteMany({});
 
+  const MEN_CATEGORIES = ['MEN_SNEAKERS', 'MEN_LOAFERS', 'MEN_BOOTS', 'MEN_SHOES', 'MEN_SANDALS'];
+  const WOMEN_CATEGORIES = ['WOMEN_SNEAKERS', 'WOMEN_BOOTS', 'WOMEN_HEELS', 'WOMEN_LOAFERS', 'WOMEN_SANDALS'];
+
+  async function createCategories(categories: string[]) {
+    for (const category of categories) {
+      await prisma.category.create({
+        data: {
+          category,
+        },
+      });
+    }
+  }
+
   async function createShoePair() {
     const gender: Gender = faker.helpers.arrayElement([Gender.Men, Gender.Women]);
     const category =
-      gender === Gender.Men
-        ? faker.helpers.arrayElement(['MEN_SNEAKERS', 'MEN_LOAFERS', 'MEN_BOOTS', 'MEN_SHOES', 'MEN_SANDALS'])
-        : faker.helpers.arrayElement([
-            'WOMEN_SNEAKERS',
-            'WOMEN_BOOTS',
-            'WOMEN_HEELS',
-            'WOMEN_LOAFERS',
-            'WOMEN_SANDALS',
-          ]);
+      gender === Gender.Men ? faker.helpers.arrayElement(MEN_CATEGORIES) : faker.helpers.arrayElement(WOMEN_CATEGORIES);
     let image: string;
     switch (category) {
       case 'MEN_SNEAKERS': {
@@ -84,7 +89,11 @@ async function main() {
         model: 'shoe-' + faker.random.alphaNumeric(5),
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porta nulla mauris.',
         gender,
-        category,
+        category: {
+          connect: {
+            category: category,
+          },
+        },
         image,
         variants: {
           create: [
@@ -108,6 +117,9 @@ async function main() {
       },
     });
   }
+
+  await createCategories(MEN_CATEGORIES);
+  await createCategories(WOMEN_CATEGORIES);
 
   for (let i = 0; i < 50; i++) {
     await createShoePair();

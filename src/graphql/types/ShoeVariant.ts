@@ -18,6 +18,22 @@ builder.prismaObject('ShoeVariant', {
   }),
 });
 
+export const ShoeSizeStock = builder.prismaObject('ShoeVariant', {
+  variant: 'ShoeSizeStock',
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    createdAt: t.expose('createdAt', {
+      type: 'DateTime',
+    }),
+    updatedAt: t.expose('updatedAt', {
+      type: 'DateTime',
+    }),
+    sku: t.exposeString('sku'),
+    size: t.exposeString('size'),
+    stock: t.exposeInt('stock'),
+  }),
+});
+
 builder.queryField('getVariantById', (t) =>
   t.prismaField({
     type: 'ShoeVariant',

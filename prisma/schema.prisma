@@ -22,9 +22,10 @@ model Shoe {
   model       String        @unique @db.VarChar(50)
   description String        @db.VarChar(256)
   image       String        @db.VarChar(256)
-  category    String        @db.VarChar(256)
   gender      Gender
   variants    ShoeVariant[]
+  category    Category      @relation(fields: [categoryId], references: [id])
+  categoryId  Int
 }
 
 model ShoeVariant {
@@ -36,6 +37,14 @@ model ShoeVariant {
   stock     Int
   Shoe      Shoe     @relation(fields: [shoeSku], references: [sku])
   shoeSku   String
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  category  String   @unique
+  Shoe      Shoe[]
 }
 
 enum Gender {
