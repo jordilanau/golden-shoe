@@ -85,7 +85,10 @@ builder.mutationField('createModel', (t) =>
       description: t.arg.string({ required: true }),
       image: t.arg.string({ required: true }),
       category: t.arg.string({ required: true }),
-      gender: t.arg.string({ required: true }),
+      gender: t.arg({
+        type: GenderEnum,
+        required: true,
+      }),
     },
     resolve: async (mutation, _parent, args, _ctx, _info) =>
       await prisma.shoe.create({
