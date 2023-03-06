@@ -1,12 +1,7 @@
 import { gql } from '@apollo/client';
-import { Category } from '@prisma/client';
 import assert from 'assert';
 import { prisma } from '../../../src/global/db';
 import { server } from '../../../src/pages/api/graphql';
-
-const allCategoriesSpy = jest.spyOn(prisma.category, 'findMany');
-const uniqueCategorySpy = jest.spyOn(prisma.category, 'findUnique');
-const createCategorySpy = jest.spyOn(prisma.category, 'create');
 
 describe('Category test suite', () => {
   afterEach(() => {
@@ -14,14 +9,15 @@ describe('Category test suite', () => {
   });
 
   it('fetches all categories in the db', async () => {
-    const mockData: Category = {
-      id: 1,
+    const mockData = {
+      id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'MEN_BOOTS',
+      category: 'CATEGORY 1',
     };
 
-    allCategoriesSpy.mockResolvedValueOnce([mockData]);
+    const findManyMock = jest.fn().mockResolvedValueOnce([mockData]);
+    prisma.category.findMany = findManyMock;
 
     const result = await server.executeOperation({
       query: gql`
@@ -38,20 +34,15 @@ describe('Category test suite', () => {
 
     assert(result.body.kind === 'single');
     expect(result.body.singleResult.errors).toBeUndefined();
-    expect(result.body.singleResult.data?.getAllCategories).toEqual([
-      {
-        ...mockData,
-        id: mockData.id.toString(),
-      },
-    ]);
+    expect(result.body.singleResult.data?.getAllCategories).toEqual([mockData]);
   });
 
   it('fetches a category by id with no shoes', async () => {
     const mockData = {
-      id: 1,
+      id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'MEN_BOOTS',
+      category: 'CATEGORY 1',
       Shoe: [],
     };
 
@@ -59,7 +50,7 @@ describe('Category test suite', () => {
       id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'MEN_BOOTS',
+      category: 'CATEGORY 1',
       Shoe: {
         pageInfo: {
           endCursor: null,
@@ -71,7 +62,8 @@ describe('Category test suite', () => {
       },
     };
 
-    uniqueCategorySpy.mockResolvedValueOnce(mockData);
+    const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
+    prisma.category.findUnique = findUniqueMock;
 
     const result = await server.executeOperation({
       query: gql`
@@ -129,10 +121,10 @@ describe('Category test suite', () => {
 
   it('fetches a category by name with no shoes', async () => {
     const mockData = {
-      id: 1,
+      id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'MEN_BOOTS',
+      category: 'CATEGORY 1',
       Shoe: [],
     };
 
@@ -140,7 +132,7 @@ describe('Category test suite', () => {
       id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'MEN_BOOTS',
+      category: 'CATEGORY 1',
       Shoe: {
         pageInfo: {
           endCursor: null,
@@ -152,7 +144,8 @@ describe('Category test suite', () => {
       },
     };
 
-    uniqueCategorySpy.mockResolvedValueOnce(mockData);
+    const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
+    prisma.category.findUnique = findUniqueMock;
 
     const result = await server.executeOperation({
       query: gql`
@@ -210,13 +203,14 @@ describe('Category test suite', () => {
 
   it('creates a new category', async () => {
     const mockData = {
-      id: 1,
+      id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'RANDOM_CATEGORY',
+      category: 'CATEGORY 1',
     };
 
-    createCategorySpy.mockResolvedValueOnce(mockData);
+    const createMock = jest.fn().mockResolvedValueOnce(mockData);
+    prisma.category.create = createMock;
 
     const result = await server.executeOperation({
       query: gql`
@@ -234,9 +228,6 @@ describe('Category test suite', () => {
 
     assert(result.body.kind === 'single');
     expect(result.body.singleResult.errors).toBeUndefined();
-    expect(result.body.singleResult.data?.createCategory).toEqual({
-      ...mockData,
-      id: mockData.id.toString(),
-    });
+    expect(result.body.singleResult.data?.createCategory).toEqual(mockData);
   });
 });
