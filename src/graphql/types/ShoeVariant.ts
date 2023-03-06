@@ -14,7 +14,7 @@ builder.prismaObject('ShoeVariant', {
     sku: t.exposeString('sku'),
     size: t.exposeString('size'),
     stock: t.exposeInt('stock'),
-    shoe: t.relation('Shoe', { type: ShoeModel }),
+    shoe: t.relation('shoe', { type: ShoeModel }),
   }),
 });
 
@@ -71,7 +71,7 @@ builder.mutationField('addVariantToModel', (t) =>
           sku: Math.random().toString(36).substring(2, 12),
           size: args.size,
           stock: args.stock,
-          Shoe: {
+          shoe: {
             connect: {
               sku: args.shoeSku,
             },

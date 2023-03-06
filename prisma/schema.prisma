@@ -35,7 +35,7 @@ model ShoeVariant {
   sku       String   @unique
   size      String
   stock     Int
-  Shoe      Shoe     @relation(fields: [shoeSku], references: [sku])
+  shoe      Shoe     @relation(fields: [shoeSku], references: [sku])
   shoeSku   String
 }
 

@@ -34,6 +34,7 @@ export const ShoeModel = builder.prismaObject('Shoe', {
     updatedAt: t.expose('updatedAt', {
       type: 'DateTime',
     }),
+    sku: t.exposeString('sku'),
     model: t.exposeString('model'),
     description: t.exposeString('description'),
     image: t.exposeString('image'),
