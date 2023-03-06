@@ -31,7 +31,10 @@ builder.queryType({
 builder.mutationType({
   fields: (t) => ({
     ok: t.boolean({
-      resolve: () => true,
+      args: {
+        input: t.arg.boolean({ required: true }),
+      },
+      resolve: (_parent, args) => args.input,
     }),
   }),
 });
