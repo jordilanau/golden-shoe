@@ -44,7 +44,7 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   category  String   @unique
-  Shoe      Shoe[]
+  shoe      Shoe[]
 }
 
 enum Gender {

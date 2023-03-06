@@ -43,7 +43,7 @@ describe('Category test suite', () => {
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
       category: 'CATEGORY 1',
-      Shoe: [],
+      shoe: [],
     };
 
     const expected = {
@@ -51,7 +51,7 @@ describe('Category test suite', () => {
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
       category: 'CATEGORY 1',
-      Shoe: {
+      shoe: {
         pageInfo: {
           endCursor: null,
           hasNextPage: false,
@@ -73,7 +73,7 @@ describe('Category test suite', () => {
             createdAt
             updatedAt
             category
-            Shoe(after: $after, first: $first, before: $before, last: $last) {
+            shoe(after: $after, first: $first, before: $before, last: $last) {
               pageInfo {
                 endCursor
                 hasNextPage
@@ -125,7 +125,7 @@ describe('Category test suite', () => {
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
       category: 'CATEGORY 1',
-      Shoe: [],
+      shoe: [],
     };
 
     const expected = {
@@ -133,7 +133,7 @@ describe('Category test suite', () => {
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
       category: 'CATEGORY 1',
-      Shoe: {
+      shoe: {
         pageInfo: {
           endCursor: null,
           hasNextPage: false,
@@ -155,7 +155,7 @@ describe('Category test suite', () => {
             createdAt
             updatedAt
             category
-            Shoe(after: $after, before: $before, first: $first, last: $last) {
+            shoe(after: $after, before: $before, first: $first, last: $last) {
               pageInfo {
                 endCursor
                 hasNextPage

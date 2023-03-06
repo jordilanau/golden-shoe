@@ -11,7 +11,7 @@ builder.prismaObject('Category', {
       type: 'DateTime',
     }),
     category: t.exposeString('category'),
-    Shoe: t.relatedConnection('Shoe', {
+    shoe: t.relatedConnection('shoe', {
       cursor: 'id',
     }),
   }),
