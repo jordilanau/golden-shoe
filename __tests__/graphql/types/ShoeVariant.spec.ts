@@ -9,31 +9,32 @@ describe('ShoeVariant test suite', () => {
     jest.clearAllMocks();
   });
 
-  it('fetches a variant by id', async () => {
-    const mockData = {
+  const mockData = {
+    id: '1',
+    createdAt: new Date('2023-02-28T16:18:20.034Z'),
+    updatedAt: new Date('2023-02-28T16:18:20.034Z'),
+    sku: '1234567890',
+    size: '10',
+    stock: 15,
+    shoe: {
       id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      size: '10',
-      stock: 10,
-      shoe: {
+      sku: '0123456789',
+      model: 'shoe model 1',
+      description: 'shoe model description',
+      gender: Gender.Men,
+      image: 'https://www.example.com',
+      category: {
         id: '1',
         createdAt: new Date('2023-02-28T16:18:20.034Z'),
         updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        model: 'shoe model 1',
-        description: 'shoe model description',
-        gender: Gender.Men,
-        image: 'https://www.example.com',
-        category: {
-          id: '1',
-          createdAt: new Date('2023-02-28T16:18:20.034Z'),
-          updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-          category: 'CATEGORY 1',
-        },
+        category: 'CATEGORY 1',
       },
-    };
+    },
+  };
 
+  it('fetches a variant by id', async () => {
     const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.shoeVariant.findUnique = findUniqueMock;
 
@@ -51,6 +52,7 @@ describe('ShoeVariant test suite', () => {
               id
               createdAt
               updatedAt
+              sku
               model
               description
               gender
@@ -65,7 +67,7 @@ describe('ShoeVariant test suite', () => {
           }
         }
       `,
-      variables: { getVariantByIdId: 1 },
+      variables: { getVariantByIdId: parseInt(mockData.id) },
     });
 
     assert(result.body.kind === 'single');
@@ -74,30 +76,6 @@ describe('ShoeVariant test suite', () => {
   });
 
   it('fetches a variant by sku', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      size: '10',
-      stock: 10,
-      shoe: {
-        id: '1',
-        createdAt: new Date('2023-02-28T16:18:20.034Z'),
-        updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        model: 'shoe model 1',
-        description: 'shoe model description',
-        gender: Gender.Men,
-        image: 'https://www.example.com',
-        category: {
-          id: '1',
-          createdAt: new Date('2023-02-28T16:18:20.034Z'),
-          updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-          category: 'CATEGORY 1',
-        },
-      },
-    };
-
     const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.shoeVariant.findUnique = findUniqueMock;
 
@@ -115,6 +93,7 @@ describe('ShoeVariant test suite', () => {
               id
               createdAt
               updatedAt
+              sku
               model
               description
               gender
@@ -129,7 +108,7 @@ describe('ShoeVariant test suite', () => {
           }
         }
       `,
-      variables: { sku: '1234567890' },
+      variables: { sku: mockData.sku },
     });
 
     assert(result.body.kind === 'single');
@@ -138,31 +117,6 @@ describe('ShoeVariant test suite', () => {
   });
 
   it('adds a variant to a model', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      size: '12',
-      stock: 15,
-      shoe: {
-        id: '1',
-        createdAt: new Date('2023-02-28T16:18:20.034Z'),
-        updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        sku: '0123456789',
-        model: 'shoe model 1',
-        description: 'shoe model description',
-        gender: Gender.Men,
-        image: 'https://www.example.com',
-        category: {
-          id: '1',
-          createdAt: new Date('2023-02-28T16:18:20.034Z'),
-          updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-          category: 'CATEGORY 1',
-        },
-      },
-    };
-
     const createMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.shoeVariant.create = createMock;
 
@@ -196,7 +150,7 @@ describe('ShoeVariant test suite', () => {
         }
       `,
       variables: {
-        shoeSku: '0123456789',
+        shoeSku: mockData.shoe.sku,
         size: '12',
         stock: 15,
       },

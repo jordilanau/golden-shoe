@@ -9,44 +9,30 @@ describe('Shoe test suite', () => {
     jest.clearAllMocks();
   });
 
-  it('fetches all shoe models in the db', async () => {
-    const mockData = {
+  const mockData = {
+    id: '1',
+    createdAt: new Date('2023-02-28T16:18:20.034Z'),
+    updatedAt: new Date('2023-02-28T16:18:20.034Z'),
+    sku: '1234567890',
+    model: 'product 1',
+    description: 'description product 1',
+    image: 'https://www.example.com',
+    gender: Gender.Women,
+    category: {
       id: '1',
       createdAt: new Date('2023-02-28T16:18:20.034Z'),
       updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      model: 'product 1',
-      description: 'description product 1',
-      image: 'https://www.example.com',
-      gender: Gender.Women,
-      category: {
-        id: '1',
-        createdAt: new Date('2023-02-28T16:18:20.034Z'),
-        updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        category: 'CATEGORY 1',
-      },
-      variants: [],
-    };
+      category: 'CATEGORY 1',
+    },
+    variants: [],
+  };
 
+  it('fetches all shoe models in the db', async () => {
     const expected = {
       edges: [
         {
           node: {
-            id: '1',
-            createdAt: new Date('2023-02-28T16:18:20.034Z'),
-            updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-            sku: '1234567890',
-            model: 'product 1',
-            description: 'description product 1',
-            image: 'https://www.example.com',
-            gender: Gender.Women,
-            category: {
-              id: '1',
-              createdAt: new Date('2023-02-28T16:18:20.034Z'),
-              updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-              category: 'CATEGORY 1',
-            },
-            variants: [],
+            ...mockData,
           },
         },
       ],
@@ -108,24 +94,6 @@ describe('Shoe test suite', () => {
   });
 
   it('fetches a shoe model by id', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      model: 'product 1',
-      description: 'description product 1',
-      image: 'https://www.example.com',
-      gender: Gender.Women,
-      category: {
-        id: '1',
-        createdAt: new Date('2023-02-28T16:18:20.034Z'),
-        updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        category: 'CATEGORY 1',
-      },
-      variants: [],
-    };
-
     const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.shoe.findUnique = findUniqueMock;
 
@@ -158,7 +126,7 @@ describe('Shoe test suite', () => {
           }
         }
       `,
-      variables: { getModelByIdId: 1 },
+      variables: { getModelByIdId: parseInt(mockData.id) },
     });
 
     assert(result.body.kind === 'single');
@@ -167,24 +135,6 @@ describe('Shoe test suite', () => {
   });
 
   it('fetches a shoe model by sku', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      model: 'product 1',
-      description: 'description product 1',
-      image: 'https://www.example.com',
-      gender: Gender.Women,
-      category: {
-        id: '1',
-        createdAt: new Date('2023-02-28T16:18:20.034Z'),
-        updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        category: 'CATEGORY 1',
-      },
-      variants: [],
-    };
-
     const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.shoe.findUnique = findUniqueMock;
 
@@ -217,7 +167,7 @@ describe('Shoe test suite', () => {
           }
         }
       `,
-      variables: { sku: '1234567890' },
+      variables: { sku: mockData.sku },
     });
 
     assert(result.body.kind === 'single');
@@ -226,24 +176,6 @@ describe('Shoe test suite', () => {
   });
 
   it('creates a new model', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      sku: '1234567890',
-      model: 'shoe-12345',
-      description: 'Some new random description',
-      image: 'http://www.image.com',
-      gender: Gender.Women,
-      variants: [],
-      category: {
-        id: '1',
-        createdAt: new Date('2023-02-28T16:18:20.034Z'),
-        updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-        category: 'CATEGORY 1',
-      },
-    };
-
     const createMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.shoe.create = createMock;
 

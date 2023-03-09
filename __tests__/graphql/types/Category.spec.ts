@@ -8,14 +8,14 @@ describe('Category test suite', () => {
     jest.clearAllMocks();
   });
 
-  it('fetches all categories in the db', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'CATEGORY 1',
-    };
+  const mockData = {
+    id: '1',
+    createdAt: new Date('2023-02-28T16:18:20.034Z'),
+    updatedAt: new Date('2023-02-28T16:18:20.034Z'),
+    category: 'CATEGORY 1',
+  };
 
+  it('fetches all categories in the db', async () => {
     const findManyMock = jest.fn().mockResolvedValueOnce([mockData]);
     prisma.category.findMany = findManyMock;
 
@@ -38,19 +38,8 @@ describe('Category test suite', () => {
   });
 
   it('fetches a category by id with no shoes', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'CATEGORY 1',
-      shoe: [],
-    };
-
     const expected = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'CATEGORY 1',
+      ...mockData,
       shoe: {
         pageInfo: {
           endCursor: null,
@@ -62,7 +51,10 @@ describe('Category test suite', () => {
       },
     };
 
-    const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
+    const findUniqueMock = jest.fn().mockResolvedValueOnce({
+      ...mockData,
+      shoe: [],
+    });
     prisma.category.findUnique = findUniqueMock;
 
     const result = await server.executeOperation({
@@ -111,7 +103,7 @@ describe('Category test suite', () => {
           }
         }
       `,
-      variables: { getCategoryByIdId: 1 },
+      variables: { getCategoryByIdId: parseInt(mockData.id) },
     });
 
     assert(result.body.kind === 'single');
@@ -120,19 +112,8 @@ describe('Category test suite', () => {
   });
 
   it('fetches a category by name with no shoes', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'CATEGORY 1',
-      shoe: [],
-    };
-
     const expected = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'CATEGORY 1',
+      ...mockData,
       shoe: {
         pageInfo: {
           endCursor: null,
@@ -144,7 +125,10 @@ describe('Category test suite', () => {
       },
     };
 
-    const findUniqueMock = jest.fn().mockResolvedValueOnce(mockData);
+    const findUniqueMock = jest.fn().mockResolvedValueOnce({
+      ...mockData,
+      shoe: [],
+    });
     prisma.category.findUnique = findUniqueMock;
 
     const result = await server.executeOperation({
@@ -193,7 +177,7 @@ describe('Category test suite', () => {
           }
         }
       `,
-      variables: { category: 'MEN_BOOTS' },
+      variables: { category: mockData.category },
     });
 
     assert(result.body.kind === 'single');
@@ -202,13 +186,6 @@ describe('Category test suite', () => {
   });
 
   it('creates a new category', async () => {
-    const mockData = {
-      id: '1',
-      createdAt: new Date('2023-02-28T16:18:20.034Z'),
-      updatedAt: new Date('2023-02-28T16:18:20.034Z'),
-      category: 'CATEGORY 1',
-    };
-
     const createMock = jest.fn().mockResolvedValueOnce(mockData);
     prisma.category.create = createMock;
 
